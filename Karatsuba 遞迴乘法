@@ -1,0 +1,71 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+int t=10,N_1,N_2,n1,n2;
+int x_plz(int);
+int Karatsuba(int ,int);
+int Karatsuba(int x,int y){
+	printf("x=%d, y=%d\n",x,y);
+	if(x<10 || y<10){
+		return (x*y);
+	}
+	else {
+		int a,b,c,d,ac,bd,c4,bb,dd;
+		long long abcd=0,c5;
+		int n1,n2;
+		if(x==10){
+			a=1; b=0; N_1=1;
+		}
+		else{
+			N_1=x_plz(x)/2;	
+		
+			a=x/pow(10,N_1);
+			bb=pow(10,N_1);
+			b=x%bb;
+		}
+		
+		
+		if(y==10){
+			c=1; d=0; N_2=1;
+		}
+		else{
+			N_2=x_plz(y)/2;
+			
+			c=y/pow(10,N_2);
+			dd=pow(10,N_2);
+			d=y%dd;
+		}
+		ac=Karatsuba(a,c);
+	
+		bd=Karatsuba(b,d);
+
+		abcd=Karatsuba(a+b,c+d);
+	}
+	
+	
+	
+}
+
+int x_plz(int a){
+	int T=2;
+	t=10;
+	if(a<10){
+		return 1;
+	}
+	for(T=2;T<=6;T++){
+		if((a/t)>=1 &&(a/t)<=9){
+			return T;
+		}
+		else{
+			t*=10;
+		}
+	}
+}
+int main(){
+	long long sum,x_,y_;
+	cin>>x_>>y_;
+	sum=(long long)x_*y_;
+	Karatsuba(x_,y_);
+	cout<<sum;
+	return 0;
+}
