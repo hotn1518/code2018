@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string.h>
+#include <algorithm>
+using namespace std;
+int k;
+string S="0123456789ABCDEFGHIJKLMN",New[5];
+string _10toN(int);
+int Nto10(string);
+int find(string);
+int main() {
+	int i,j,T=0,N_1,N_2,N_3,N_4;
+	string s1="",s2="",s2_1="",s2_0="";
+	cin>>k>>s1>>s2;
+	
+	T=find(s1);//尋找是否超出範圍 1=ture
+	if(T==1){
+		cout<<"Error"; return 0;
+	} 
+	T=find(s2);//尋找是否超出範圍 1=ture
+	if(T!=1) cout<<s1<<" "<<s2; 
+	else{
+		cout<<"Error";
+		return 0;	
+	} 
+		
+	cout<<" ";
+	
+	N_1=Nto10(s1);//s1  N轉10 
+	N_2=Nto10(s2);//s2 N轉10 
+	s2_1=s2[1];
+	
+	N_3=Nto10(s2_1);//s2個位轉數字 
+	New[0]=_10toN(N_1*N_3);//s1*s2的個位 
+	cout<<New[0]<<" ";
+	
+	s2_0=s2[0];
+	N_4=Nto10(s2_0);//s2十位轉數字 
+	New[1]=_10toN(N_1*N_4*k);//s1*s2的十位
+
+	cout<<New[1]<<" ";
+	New[2]=_10toN(N_1*N_2);//乘法結果 
+	cout<<New[2];
+	
+	
+	
+	 
+	
+	return 0;
+}
+
+int find(string s){//檢查是否超出範圍 
+	int i,j;
+	for(i=0;i<2;i++){
+		for(j=0;j<=24;j++){
+			if((int)s[i]==(int)S[j]){
+				if(j>=k){
+						return 1;	
+				}
+			}
+		}
+	}
+}
+
+string _10toN(int n){//10轉N 
+	string ans="";
+	do{
+		int t=n%k;
+		if(t>=0&&t<=9) ans+=t+'0';
+		else ans+=t-10+'A';
+		n/=k;
+	}while(n!=0);
+	reverse(ans.begin(),ans.end());
+	return ans;
+	
+}
+int Nto10(string s){//N轉10 
+	int i,ans=0;
+    for(i=0;i<s.size();i++){
+    	char t=s[i];
+    	if(t>='0'&&t<='9') ans=ans*k+t-'0';
+    	else ans=ans*k+t-'A'+10;
+	}
+	return ans;
+	
+}
