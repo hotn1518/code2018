@@ -1,0 +1,84 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+int P[10][4];
+void binary_cal(int n,int T){  
+     int r,i=3;  
+     while(n>0){
+     	P[T][i]=n%2;
+     	i--;
+     	n=n/2;
+	 }  
+       
+}  
+int main() {
+	string code;
+	bool New[5];//XOR
+	int k,i,M,C[14],c,t=0,j,T=0;
+	cin>>k>>code;
+	for(i=0;i<=k-1;i++){//A步驟 
+		if(k<=pow(2,i)){
+			if(k==pow(2,i)){
+				M=i;
+				break;
+			}
+			else{
+				M=i-1;
+				break;
+			}
+		}
+	}
+	
+	c=k+M;
+	for(i=0;i<10;i++){//歸0 
+		for(j=0;j<4;j++){
+			P[i][j]=0;
+		}
+	}
+	for(i=0;i<=c;i++){//b步驟 
+		if(i==0 ||i==1 ||i==3 ||i==7 ){
+			C[i]=-1;
+		}
+		else{
+			C[i]=(int)code[t]-48;
+			t++;
+			if(C[i]==1){
+				binary_cal(i+1,T);
+				T++;
+			}
+		}
+	}
+	t=0;
+	
+	for(i=0;i<4;i++){//XOR
+		for(j=0;j<k-1;j++){
+			if((P[j][i]==0 && P[j+1][i]==1) || (P[j][i]==1 && P[j+1][i]==0)){
+				P[j+1][i]=1;
+			}
+			else{
+				P[j+1][i]=0;
+				
+			}
+			
+		}
+		New[i]=P[j][i];
+	}
+	
+	T=3;
+	t=0;
+	for(i=0;i<=c;i++){
+		if(i==0 ||i==1 ||i==3 ||i==7 ){
+			cout<<New[T];
+			T--;
+		}
+		else{
+			cout<<code[t];
+			t++;
+		}
+	}
+	
+	
+	
+	return 0;
+}
+
